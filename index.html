@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Belajar Hangeul</title>
+
+<style>
+:root{
+  --primary:#4f8cff;
+  --bg:#f2f5fa;
+  --card:#ffffff;
+  --text:#222;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  background:var(--bg);
+  color:var(--text);
+}
+
+header{
+  padding:16px;
+  text-align:center;
+  font-size:20px;
+  font-weight:700;
+  background:linear-gradient(135deg,#4f8cff,#6aa8ff);
+  color:white;
+}
+
+nav{
+  display:flex;
+  gap:8px;
+  padding:10px;
+  overflow-x:auto;
+  background:white;
+}
+
+nav button{
+  flex:1;
+  min-width:90px;
+  border:none;
+  padding:10px;
+  border-radius:999px;
+  background:#eef2ff;
+  font-size:13px;
+  cursor:pointer;
+}
+
+nav button.active{
+  background:var(--primary);
+  color:white;
+}
+
+section{
+  display:none;
+  padding:15px;
+}
+
+section.active{display:block}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:18px 10px;
+  text-align:center;
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
+}
+
+.huruf{
+  font-size:36px;
+  font-weight:700;
+}
+
+.arti{
+  margin-top:4px;
+  font-size:13px;
+  color:#666;
+}
+
+.box{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 6px 16px rgba(0,0,0,.08);
+  text-align:center;
+}
+
+select{
+  font-size:18px;
+  padding:8px 12px;
+  border-radius:12px;
+  border:1px solid #ddd;
+}
+
+.result{
+  margin-top:15px;
+  font-size:48px;
+  font-weight:800;
+  color:var(--primary);
+}
+
+.word{
+  font-size:28px;
+  font-weight:700;
+  margin-top:10px;
+}
+
+.read{
+  font-size:14px;
+  color:#666;
+}
+
+.footer{
+  height:30px;
+}
+</style>
+</head>
+
+<body>
+
+<header>🇰🇷 Belajar Hangeul</header>
+
+<nav>
+  <button class="active" onclick="tab('vokal',this)">Vokal</button>
+  <button onclick="tab('kon',this)">Konsonan</button>
+  <button onclick="tab('rangkap',this)">Rangkap</button>
+  <button onclick="tab('gabung',this)">Gabung</button>
+  <button onclick="tab('baca',this)">Baca</button>
+</nav>
+
+<section id="vokal" class="active">
+  <div class="grid" id="vokalList"></div>
+</section>
+
+<section id="kon">
+  <div class="grid" id="konList"></div>
+</section>
+
+<section id="rangkap">
+  <div class="grid" id="rangkapList"></div>
+</section>
+
+<section id="gabung">
+  <div class="box">
+    <select id="k"></select>
+    +
+    <select id="v"></select>
+    <div class="result" id="out">가</div>
+  </div>
+</section>
+
+<section id="baca">
+  <div class="box">
+    <div class="word">가방</div>
+    <div class="read">ga-bang (tas)</div>
+
+    <div class="word">나무</div>
+    <div class="read">na-mu (pohon)</div>
+
+    <div class="word">학교</div>
+    <div class="read">hak-gyo (sekolah)</div>
+
+    <div class="word">나는 학생입니다</div>
+    <div class="read">na-neun hak-saeng-im-ni-da</div>
+  </div>
+</section>
+
+<div class="footer"></div>
+
+<script>
+const vokal=[["ㅏ","a"],["ㅓ","eo"],["ㅗ","o"],["ㅜ","u"],["ㅡ","eu"],["ㅣ","i"]];
+const kon=[["ㄱ","g/k"],["ㄴ","n"],["ㄷ","d/t"],["ㄹ","r/l"],["ㅁ","m"],["ㅂ","b/p"],["ㅅ","s"],["ㅇ","- / ng"],["ㅈ","j"],["ㅊ","ch"],["ㅋ","k"],["ㅌ","t"],["ㅍ","p"],["ㅎ","h"]];
+const rangkap=[["ㄲ","kk"],["ㄸ","tt"],["ㅃ","pp"],["ㅆ","ss"],["ㅉ","jj"]];
+
+function draw(arr,id){
+  const el=document.getElementById(id);
+  el.innerHTML="";
+  arr.forEach(x=>{
+    el.innerHTML+=`<div class="card"><div class="huruf">${x[0]}</div><div class="arti">${x[1]}</div></div>`;
+  });
+}
+
+draw(vokal,"vokalList");
+draw(kon,"konList");
+draw(rangkap,"rangkapList");
+
+function tab(id,btn){
+  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+}
+
+const base=0xAC00;
+function make(a,b){
+  return String.fromCharCode(base+(kon.findIndex(x=>x[0]==a)*21+vokal.findIndex(x=>x[0]==b))*28);
+}
+
+kon.forEach(x=>k.innerHTML+=`<option>${x[0]}</option>`);
+vokal.forEach(x=>v.innerHTML+=`<option>${x[0]}</option>`);
+
+function upd(){out.textContent=make(k.value,v.value);}
+k.onchange=upd;v.onchange=upd;upd();
+</script>
+
+</body>
+</html>

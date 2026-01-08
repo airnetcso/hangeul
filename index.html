@@ -1,217 +1,126 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Belajar Hangeul</title>
-
-<style>
-:root{
-  --primary:#4f8cff;
-  --bg:#f2f5fa;
-  --card:#ffffff;
-  --text:#222;
-}
-
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
-  background:var(--bg);
-  color:var(--text);
-}
-
-header{
-  padding:16px;
-  text-align:center;
-  font-size:20px;
-  font-weight:700;
-  background:linear-gradient(135deg,#4f8cff,#6aa8ff);
-  color:white;
-}
-
-nav{
-  display:flex;
-  gap:8px;
-  padding:10px;
-  overflow-x:auto;
-  background:white;
-}
-
-nav button{
-  flex:1;
-  min-width:90px;
-  border:none;
-  padding:10px;
-  border-radius:999px;
-  background:#eef2ff;
-  font-size:13px;
-  cursor:pointer;
-}
-
-nav button.active{
-  background:var(--primary);
-  color:white;
-}
-
-section{
-  display:none;
-  padding:15px;
-}
-
-section.active{display:block}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-}
-
-.card{
-  background:var(--card);
-  border-radius:16px;
-  padding:18px 10px;
-  text-align:center;
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
-}
-
-.huruf{
-  font-size:36px;
-  font-weight:700;
-}
-
-.arti{
-  margin-top:4px;
-  font-size:13px;
-  color:#666;
-}
-
-.box{
-  background:white;
-  border-radius:18px;
-  padding:20px;
-  box-shadow:0 6px 16px rgba(0,0,0,.08);
-  text-align:center;
-}
-
-select{
-  font-size:18px;
-  padding:8px 12px;
-  border-radius:12px;
-  border:1px solid #ddd;
-}
-
-.result{
-  margin-top:15px;
-  font-size:48px;
-  font-weight:800;
-  color:var(--primary);
-}
-
-.word{
-  font-size:28px;
-  font-weight:700;
-  margin-top:10px;
-}
-
-.read{
-  font-size:14px;
-  color:#666;
-}
-
-.footer{
-  height:30px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPS-TOPIK Digital 2024</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background: #fff0f5; 
+            margin: 0; 
+            padding: 20px; 
+            color: #444; 
+        }
+        header { 
+            background: linear-gradient(#ff99cc, #ff66aa); 
+            padding: 30px; 
+            text-align: center; 
+            color: white; 
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1 { 
+            font-size: 2em; 
+            margin: 0; 
+            font-weight: normal;
+        }
+        .subtitle {
+            font-size: 1.1em;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+        .bab-list { 
+            max-width: 600px; 
+            margin: 40px auto; 
+            padding: 0; 
+        }
+        .bab-item { 
+            margin: 10px 0;
+            padding: 14px 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.2s;
+        }
+        .bab-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+        }
+        .bab-item a { 
+            text-decoration: none; 
+            color: #555; 
+            display: block;
+        }
+        .bab-item a:hover { 
+            color: #ff66aa; 
+        }
+        .bab-number { 
+            font-weight: bold; 
+            color: #ff66aa; 
+            font-size: 1.1em;
+        }
+        .bab-title {
+            margin-left: 10px;
+            font-size: 1em;
+        }
+        footer { 
+            text-align: center; 
+            padding: 40px; 
+            font-size: 0.9em; 
+            color: #aaa; 
+            margin-top: 50px;
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 1.7em; }
+            .bab-item { padding: 16px; }
+        }
+    </style>
 </head>
-
 <body>
 
-<header>🇰🇷 Belajar Hangeul</header>
+<header>
+    <h1>EPS-TOPIK Digital 2024</h1>
+    <div class="subtitle">Materi Lengkap Bab 1–30 • Belajar Bahasa Korea untuk Pekerja Migran</div>
+</header>
 
-<nav>
-  <button class="active" onclick="tab('vokal',this)">Vokal</button>
-  <button onclick="tab('kon',this)">Konsonan</button>
-  <button onclick="tab('rangkap',this)">Rangkap</button>
-  <button onclick="tab('gabung',this)">Gabung</button>
-  <button onclick="tab('baca',this)">Baca</button>
-</nav>
+<div class="bab-list">
+    <div class="bab-item"><a href="bab1.html#Home"><span class="bab-number">BAB 1</span><span class="bab-title">자기소개 (Perkenalan Diri)</span></a></div>
+    <div class="bab-item"><a href="bab2.html#Home"><span class="bab-number">BAB 2</span><span class="bab-title">생활용품 (Barang Kehidupan Sehari-hari)</span></a></div>
+    <div class="bab-item"><a href="bab3.html#Home"><span class="bab-number">BAB 3</span><span class="bab-title">위치와 장소 (Posisi dan Tempat)</span></a></div>
+    <div class="bab-item"><a href="bab4.html#Home"><span class="bab-number">BAB 4</span><span class="bab-title">동작과 사물 (Gerakan dan Benda)</span></a></div>
+    <div class="bab-item"><a href="bab5.html#Home"><span class="bab-number">BAB 5</span><span class="bab-title">날짜와 요일 (Tanggal dan Hari)</span></a></div>
+    <div class="bab-item"><a href="bab6.html#Home"><span class="bab-number">BAB 6</span><span class="bab-title">하루 일과 (Rutinitas Harian)</span></a></div>
+    <div class="bab-item"><a href="bab7.html#Home"><span class="bab-number">BAB 7</span><span class="bab-title">시간 (Waktu)</span></a></div>
+    <div class="bab-item"><a href="bab8.html#Home"><span class="bab-number">BAB 8</span><span class="bab-title">가족 (Keluarga)</span></a></div>
+    <div class="bab-item"><a href="bab9.html#Home"><span class="bab-number">BAB 9</span><span class="bab-title">음식 (Makanan)</span></a></div>
+    <div class="bab-item"><a href="bab10.html#Home"><span class="bab-number">BAB 10</span><span class="bab-title">쇼핑 (Belanja)</span></a></div>
+    <div class="bab-item"><a href="bab11.html#Home"><span class="bab-number">BAB 11</span><span class="bab-title">교통 (Transportasi)</span></a></div>
+    <div class="bab-item"><a href="bab12.html#Home"><span class="bab-number">BAB 12</span><span class="bab-title">전화 (Telepon)</span></a></div>
+    <div class="bab-item"><a href="bab13.html#Home"><span class="bab-number">BAB 13</span><span class="bab-title">우체국 (Kantor Pos)</span></a></div>
+    <div class="bab-item"><a href="bab14.html#Home"><span class="bab-number">BAB 14</span><span class="bab-title">은행 (Bank)</span></a></div>
+    <div class="bab-item"><a href="bab15.html#Home"><span class="bab-number">BAB 15</span><span class="bab-title">병원 (Rumah Sakit)</span></a></div>
+    <div class="bab-item"><a href="bab16.html#Home"><span class="bab-number">BAB 16</span><span class="bab-title">공공기관 (Instansi Pemerintah)</span></a></div>
+    <div class="bab-item"><a href="bab17.html#Home"><span class="bab-number">BAB 17</span><span class="bab-title">직장 생활 (Kehidupan Kerja)</span></a></div>
+    <div class="bab-item"><a href="bab18.html#Home"><span class="bab-number">BAB 18</span><span class="bab-title">공장 근무 (Kerja di Pabrik)</span></a></div>
+    <div class="bab-item"><a href="bab19.html#Home"><span class="bab-number">BAB 19</span><span class="bab-title">건설 현장 (Lokasi Konstruksi)</span></a></div>
+    <div class="bab-item"><a href="bab20.html#Home"><span class="bab-number">BAB 20</span><span class="bab-title">농업 (Pertanian)</span></a></div>
+    <div class="bab-item"><a href="bab21.html#Home"><span class="bab-number">BAB 21</span><span class="bab-title">어업 (Perikanan)</span></a></div>
+    <div class="bab-item"><a href="bab22.html#Home"><span class="bab-number">BAB 22</span><span class="bab-title">생활 안전 (Keselamatan Hidup)</span></a></div>
+    <div class="bab-item"><a href="bab23.html#Home"><span class="bab-number">BAB 23</span><span class="bab-title">한국 이해 (Pemahaman tentang Korea)</span></a></div>
+    <div class="bab-item"><a href="bab24.html#Home"><span class="bab-number">BAB 24</span><span class="bab-title">문화와 예절 (Budaya dan Tata Cara)</span></a></div>
+    <div class="bab-item"><a href="bab25.html#Home"><span class="bab-number">BAB 25</span><span class="bab-title">취미와 여가 (Hobi dan Waktu Luang)</span></a></div>
+    <div class="bab-item"><a href="bab26.html#Home"><span class="bab-number">BAB 26</span><span class="bab-title">여행 (Perjalanan)</span></a></div>
+    <div class="bab-item"><a href="bab27.html#Home"><span class="bab-number">BAB 27</span><span class="bab-title">계절과 날씨 (Musim dan Cuaca)</span></a></div>
+    <div class="bab-item"><a href="bab28.html#Home"><span class="bab-number">BAB 28</span><span class="bab-title">환경 보호 (Perlindungan Lingkungan)</span></a></div>
+    <div class="bab-item"><a href="bab29.html#Home"><span class="bab-number">BAB 29</span><span class="bab-title">사회 생활 (Kehidupan Sosial)</span></a></div>
+    <div class="bab-item"><a href="bab30.html#Home"><span class="bab-number">BAB 30</span><span class="bab-title">미래 계획 (Rencana Masa Depan)</span></a></div>
+</div>
 
-<section id="vokal" class="active">
-  <div class="grid" id="vokalList"></div>
-</section>
-
-<section id="kon">
-  <div class="grid" id="konList"></div>
-</section>
-
-<section id="rangkap">
-  <div class="grid" id="rangkapList"></div>
-</section>
-
-<section id="gabung">
-  <div class="box">
-    <select id="k"></select>
-    +
-    <select id="v"></select>
-    <div class="result" id="out">가</div>
-  </div>
-</section>
-
-<section id="baca">
-  <div class="box">
-    <div class="word">가방</div>
-    <div class="read">ga-bang (tas)</div>
-
-    <div class="word">나무</div>
-    <div class="read">na-mu (pohon)</div>
-
-    <div class="word">학교</div>
-    <div class="read">hak-gyo (sekolah)</div>
-
-    <div class="word">나는 학생입니다</div>
-    <div class="read">na-neun hak-saeng-im-ni-da</div>
-  </div>
-</section>
-
-<div class="footer"></div>
-
-<script>
-const vokal=[["ㅏ","a"],["ㅓ","eo"],["ㅗ","o"],["ㅜ","u"],["ㅡ","eu"],["ㅣ","i"]];
-const kon=[["ㄱ","g/k"],["ㄴ","n"],["ㄷ","d/t"],["ㄹ","r/l"],["ㅁ","m"],["ㅂ","b/p"],["ㅅ","s"],["ㅇ","- / ng"],["ㅈ","j"],["ㅊ","ch"],["ㅋ","k"],["ㅌ","t"],["ㅍ","p"],["ㅎ","h"]];
-const rangkap=[["ㄲ","kk"],["ㄸ","tt"],["ㅃ","pp"],["ㅆ","ss"],["ㅉ","jj"]];
-
-function draw(arr,id){
-  const el=document.getElementById(id);
-  el.innerHTML="";
-  arr.forEach(x=>{
-    el.innerHTML+=`<div class="card"><div class="huruf">${x[0]}</div><div class="arti">${x[1]}</div></div>`;
-  });
-}
-
-draw(vokal,"vokalList");
-draw(kon,"konList");
-draw(rangkap,"rangkapList");
-
-function tab(id,btn){
-  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
-  btn.classList.add("active");
-}
-
-const base=0xAC00;
-function make(a,b){
-  return String.fromCharCode(base+(kon.findIndex(x=>x[0]==a)*21+vokal.findIndex(x=>x[0]==b))*28);
-}
-
-kon.forEach(x=>k.innerHTML+=`<option>${x[0]}</option>`);
-vokal.forEach(x=>v.innerHTML+=`<option>${x[0]}</option>`);
-
-function upd(){out.textContent=make(k.value,v.value);}
-k.onchange=upd;v.onchange=upd;upd();
-</script>
+<footer>
+    EPS-TOPIK Digital 2024 • Materi Pembelajaran Interaktif<br>
+    Dibuat dengan ❤️ untuk pekerja migran Indonesia di Korea
+</footer>
 
 </body>
 </html>

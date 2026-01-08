@@ -151,11 +151,14 @@ startBtn.addEventListener("click",()=>{
   toc.classList.remove("hidden");
 });
 
-/* ===== OPEN BAB ===== */
+/* ===== OPEN BAB (PATH FIXED) ===== */
 function openBab(num){
-  fetch(`hangeul/modul/bab${num}.json`)
+  const path = `./hangeul/modul/bab${num}.json`;
+  console.log("Loading:", path);
+
+  fetch(path)
     .then(res=>{
-      if(!res.ok) throw new Error("File BAB tidak ditemukan");
+      if(!res.ok) throw new Error("404");
       return res.json();
     })
     .then(data=>{

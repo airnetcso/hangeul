@@ -9,95 +9,94 @@
 *{ box-sizing:border-box; }
 
 body{
-  margin:0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background:#f4f6fb;
-  color:#222;
+ margin:0;
+ font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+ background:#f4f6fb;
+ color:#222;
 }
 .hidden{ display:none; }
 
 /* ===== COVER ===== */
 #cover{
-  height:100vh;
-  background:linear-gradient(135deg,#4e73df,#6f9cff);
-  color:#fff;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:20px;
+ height:100vh;
+ background:linear-gradient(135deg,#4e73df,#6f9cff);
+ color:#fff;
+ display:flex;
+ flex-direction:column;
+ justify-content:center;
+ align-items:center;
+ text-align:center;
+ padding:20px;
 }
 #cover h1{
-  font-size:28px;
-  margin-bottom:10px;
+ font-size:28px;
+ margin-bottom:10px;
 }
 #cover p{
-  font-size:16px;
-  opacity:.9;
+ font-size:16px;
+ opacity:.9;
 }
 #startBtn{
-  margin-top:30px;
-  padding:14px 32px;
-  font-size:18px;
-  border:none;
-  border-radius:30px;
-  background:#fff;
-  color:#4e73df;
-  font-weight:700;
+ margin-top:30px;
+ padding:14px 32px;
+ font-size:18px;
+ border:none;
+ border-radius:30px;
+ background:#fff;
+ color:#4e73df;
+ font-weight:700;
+ cursor:pointer;
 }
 
 /* ===== TOC ===== */
 #toc{
-  padding:20px;
-}
-#toc h2{
-  text-align:center;
-  margin-bottom:20px;
+ padding:20px;
 }
 .bab{
-  background:#fff;
-  padding:16px;
-  border-radius:14px;
-  margin-bottom:12px;
-  font-size:18px;
-  box-shadow:0 4px 10px rgba(0,0,0,.08);
-  cursor:pointer;
-  transition:.15s;
+ background:#fff;
+ padding:20px;
+ border-radius:14px;
+ margin-bottom:16px;
+ font-size:20px;
+ font-weight:600;
+ text-align:center;
+ box-shadow:0 4px 10px rgba(0,0,0,.08);
+ cursor:pointer;
+ transition:.15s;
 }
 .bab:active{
-  transform:scale(.97);
-  opacity:.7;
+ transform:scale(.97);
+ opacity:.7;
 }
 
 /* ===== PAGE ===== */
 #page{
-  padding:16px;
+ padding:16px;
 }
 #babTitle{
-  font-size:14px;
-  text-align:center;
-  opacity:.6;
-  margin-bottom:10px;
+ font-size:18px;
+ text-align:center;
+ font-weight:600;
+ margin-bottom:20px;
 }
 #page img{
-  width:100%;
-  max-height:45vh;
-  object-fit:cover;
-  border-radius:14px;
-  margin-bottom:16px;
-  background:#eee;
+ width:100%;
+ max-height:45vh;
+ object-fit:contain;
+ border-radius:14px;
+ margin-bottom:20px;
+ background:#eee;
 }
 #text{
-  font-size:28px;
-  font-weight:700;
-  text-align:center;
+ font-size:32px;
+ font-weight:700;
+ text-align:center;
+ margin-bottom:20px;
 }
 #progress{
-  margin-top:8px;
-  text-align:center;
-  font-size:14px;
-  opacity:.6;
+ text-align:center;
+ font-size:14px;
+ opacity:.6;
 }
 </style>
 </head>
@@ -106,25 +105,24 @@ body{
 
 <!-- ===== COVER ===== -->
 <div id="cover">
-  <h1>BELAJAR MEMBACA HANGEUL</h1>
-  <p>Latihan mendengar & membaca bahasa Korea</p>
-  <button id="startBtn">START</button>
+ <h1>BELAJAR MEMBACA HANGEUL</h1>
+ <p>Latihan mendengar & membaca bahasa Korea</p>
+ <button id="startBtn">START</button>
 </div>
 
 <!-- ===== TOC ===== -->
 <div id="toc" class="hidden">
-  <h2>DAFTAR ISI</h2>
-  <div class="bab" onclick="openBab(1)">BAB 1 – Salam Dasar</div>
-  <div class="bab" onclick="openBab(2)">BAB 2 – Perkenalan</div>
-  <div class="bab" onclick="openBab(3)">BAB 3 – Ungkapan Sopan</div>
+ <div class="bab" onclick="openBab(1)">BAB 1 – Salam Dasar</div>
+ <div class="bab" onclick="openBab(2)">BAB 2 – Perkenalan</div>
+ <div class="bab" onclick="openBab(3)">BAB 3 – Ungkapan Sopan</div>
 </div>
 
 <!-- ===== PAGE ===== -->
 <div id="page" class="hidden">
-  <div id="babTitle"></div>
-  <img id="image">
-  <div id="text"></div>
-  <div id="progress"></div>
+ <div id="babTitle"></div>
+ <img id="image" src="">
+ <div id="text"></div>
+ <div id="progress"></div>
 </div>
 
 <audio id="audio"></audio>
@@ -147,60 +145,63 @@ let pageIndex = 0;
 
 /* ===== START ===== */
 startBtn.addEventListener("click",()=>{
-  cover.classList.add("hidden");
-  toc.classList.remove("hidden");
+ cover.classList.add("hidden");
+ toc.classList.remove("hidden");
 });
 
-/* ===== OPEN BAB (PATH FIXED) ===== */
+/* ===== OPEN BAB ===== */
 function openBab(num){
-  const path = `./modul/bab${num}.json`;
+ const path = `./modul/bab${num}.json`;
 
-  console.log("Loading:", path);
+ fetch(path)
+ .then(res=>{
+ if(!res.ok) throw new Error("404");
+ return res.json();
+ })
+ .then(data=>{
+ babData = data;
+ pageIndex = 0;
 
-  fetch(path)
-    .then(res=>{
-      if(!res.ok) throw new Error("404");
-      return res.json();
-    })
-    .then(data=>{
-      babData = data;
-      pageIndex = 0;
+ babTitleEl.textContent = data.title;
 
-      babTitleEl.textContent = data.title;
+ toc.classList.add("hidden");
+ page.classList.remove("hidden");
 
-      toc.classList.add("hidden");
-      page.classList.remove("hidden");
-
-      playPage();
-    })
-    .catch(()=>{
-      alert("BAB belum tersedia atau file tidak ditemukan");
-    });
+ playPage();
+ })
+ .catch(err=>{
+ alert("BAB belum tersedia atau file tidak ditemukan");
+ console.error(err);
+ });
 }
 
 /* ===== PLAY PAGE ===== */
 function playPage(){
-  const p = babData.pages[pageIndex];
+ const p = babData.pages[pageIndex];
 
-  textEl.textContent = p.text;
-  imageEl.src = `https://airnetcso.github.io/hangeul/image/${p.image}.jpg`;
-  audioEl.src = `https://airnetcso.github.io/hangeul/audio/${p.audio}.mp3`;
+ textEl.textContent = p.text;
+ imageEl.src = `https://airnetcso.github.io/hangeul/image/${p.image}.jpg`;
+ audioEl.src = `https://airnetcso.github.io/hangeul/audio/${p.audio}.mp3`;
 
-  progressEl.textContent =
-    `Halaman ${pageIndex+1} / ${babData.pages.length}`;
+ progressEl.textContent =
+ `Halaman ${pageIndex+1} / ${babData.pages.length}`;
 
-  audioEl.play();
+ audioEl.play();
 }
 
 /* ===== AUTO NEXT ===== */
 audioEl.onended = ()=>{
-  pageIndex++;
-  if(pageIndex < babData.pages.length){
-    playPage();
-  }
+ pageIndex++;
+ if(pageIndex < babData.pages.length){
+ playPage();
+ } else {
+ alert("Bab selesai!");
+ page.classList.add("hidden");
+ toc.classList.remove("hidden");
+ pageIndex = 0;
+ }
 };
 </script>
 
 </body>
 </html>
-

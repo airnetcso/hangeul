@@ -1,9 +1,9 @@
 {
   "title": "BAB 1 – Salam Dasar",
   "pages": [
-    {"text": "안녕하세요", "image": "https://img.freepik.com/free-vector/korean-boy-girl-with-speech_1308-29261.jpg", "audio": "https://drive.google.com/file/d/1YLvkKxkNh8bC6gUNdZ4HST8XXVukKv-V/view?usp=sharing"},
-    {"text": "안녕하세요?", "image": "https://thumb.ac-illust.com/b6/b62bf675b5c1ffe0e2386b20afa5e8da_t.jpeg", "audio": "https://drive.google.com/file/d/1XT2uj5I6_lG2CHSedsYmBVQBeqCnfDob/view?usp=sharing"},
-    {"text": "좋은 아침이에요", "image": "https://c8.alamy.com/comp/2GWP3DG/four-people-greeting-in-different-languages-2GWP3DG.jpg", "audio": "https://drive.google.com/file/d/1bI2RSTAxkxfFshkIFuPsKat3Q3r-Fy6Y/view?usp=sharing"},
+    {"text": "안녕하세요", "image": "https://img.freepik.com/free-vector/korean-boy-girl-with-speech_1308-29261.jpg", "audio": "https://airnetcso.github.io/hangeul/audio/1-1.mp3"},
+    {"text": "안녕하세요?", "image": "https://thumb.ac-illust.com/b6/b62bf675b5c1ffe0e2386b20afa5e8da_t.jpeg", "audio": "https://airnetcso.github.io/hangeul/audio/1-2.mp3"},
+    {"text": "좋은 아침이에요", "image": "https://c8.alamy.com/comp/2GWP3DG/four-people-greeting-in-different-languages-2GWP3DG.jpg", "audio": "https://airnetcso.github.io/hangeul/audio/1-3.mp3"},
     {"text": "안녕!", "image": "https://pandamiwoo.wordpress.com/wp-content/uploads/2011/09/casual-annyung.jpg", "audio": "https://drive.google.com/file/d/1bI2RSTAxkxfFshkIFuPsKat3Q3r-Fy6Y/view?usp=sharing"}
   ]
 }

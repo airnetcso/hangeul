@@ -2,23 +2,26 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Belajar Membaca Hangeul</title>
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
 
 <style>
-*{ box-sizing:border-box; }
+*{ box-sizing:border-box; margin:0; padding:0; }
 
 body{
- margin:0;
  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
  background:#f4f6fb;
  color:#222;
+ min-height:100vh;
 }
+
 .hidden{ display:none; }
 
 /* ===== COVER ===== */
 #cover{
- height:100vh;
+ min-height:100vh;
  background:linear-gradient(135deg,#4e73df,#6f9cff);
  color:#fff;
  display:flex;
@@ -26,19 +29,20 @@ body{
  justify-content:center;
  align-items:center;
  text-align:center;
- padding:20px;
+ padding:40px 20px;
 }
 #cover h1{
- font-size:28px;
- margin-bottom:10px;
+ font-size:26px;
+ margin-bottom:12px;
+ line-height:1.3;
 }
 #cover p{
  font-size:16px;
  opacity:.9;
+ margin-bottom:30px;
 }
 #startBtn{
- margin-top:30px;
- padding:14px 32px;
+ padding:16px 40px;
  font-size:18px;
  border:none;
  border-radius:30px;
@@ -46,52 +50,62 @@ body{
  color:#4e73df;
  font-weight:700;
  cursor:pointer;
+ min-height:56px;
 }
 
 /* ===== TOC ===== */
 #toc{
- padding:20px;
+ padding:20px 16px;
 }
 .bab{
  background:#fff;
- padding:20px;
- border-radius:14px;
+ padding:24px;
+ border-radius:16px;
  margin-bottom:16px;
  font-size:20px;
  font-weight:600;
  text-align:center;
- box-shadow:0 4px 10px rgba(0,0,0,.08);
+ box-shadow:0 4px 12px rgba(0,0,0,.1);
  cursor:pointer;
- transition:.15s;
+ transition:transform .15s, opacity .15s;
+ min-height:68px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
 }
 .bab:active{
- transform:scale(.97);
- opacity:.7;
+ transform:scale(.96);
+ opacity:.8;
 }
 
 /* ===== PAGE ===== */
 #page{
- padding:16px;
+ padding:20px 16px;
 }
+/* Judul bab jadi kecil dan simpel */
 #babTitle{
- font-size:18px;
+ font-size:15px;
  text-align:center;
- font-weight:600;
- margin-bottom:20px;
+ opacity:.6;
+ margin-bottom:24px;
+ font-weight:500;
 }
+
 #page img{
  width:100%;
- max-height:45vh;
+ max-height:40vh;
  object-fit:contain;
- border-radius:14px;
- margin-bottom:20px;
+ border-radius:16px;
+ margin-bottom:24px;
  background:#eee;
 }
 #text{
- font-size:32px;
+ font-size:36px;
  font-weight:700;
  text-align:center;
- margin-bottom:20px;
+ line-height:1.4;
+ margin-bottom:24px;
+ word-break:break-word;
 }
 #progress{
  text-align:center;
@@ -103,21 +117,21 @@ body{
 
 <body>
 
-<!-- ===== COVER ===== -->
+<!-- COVER -->
 <div id="cover">
  <h1>BELAJAR MEMBACA HANGEUL</h1>
  <p>Latihan mendengar & membaca bahasa Korea</p>
  <button id="startBtn">START</button>
 </div>
 
-<!-- ===== TOC ===== -->
+<!-- DAFTAR ISI -->
 <div id="toc" class="hidden">
  <div class="bab" onclick="openBab(1)">BAB 1 – Salam Dasar</div>
  <div class="bab" onclick="openBab(2)">BAB 2 – Perkenalan</div>
  <div class="bab" onclick="openBab(3)">BAB 3 – Ungkapan Sopan</div>
 </div>
 
-<!-- ===== PAGE ===== -->
+<!-- HALAMAN BAB -->
 <div id="page" class="hidden">
  <div id="babTitle"></div>
  <img id="image" src="">
@@ -125,10 +139,9 @@ body{
  <div id="progress"></div>
 </div>
 
-<audio id="audio"></audio>
+<audio id="audio" preload="auto"></audio>
 
 <script>
-/* ===== ELEMENT ===== */
 const cover = document.getElementById("cover");
 const toc = document.getElementById("toc");
 const page = document.getElementById("page");
@@ -143,13 +156,11 @@ const audioEl = document.getElementById("audio");
 let babData = null;
 let pageIndex = 0;
 
-/* ===== START ===== */
 startBtn.addEventListener("click",()=>{
  cover.classList.add("hidden");
  toc.classList.remove("hidden");
 });
 
-/* ===== OPEN BAB ===== */
 function openBab(num){
  const path = `./modul/bab${num}.json`;
 
@@ -162,20 +173,18 @@ function openBab(num){
  babData = data;
  pageIndex = 0;
 
- babTitleEl.textContent = data.title;
+ babTitleEl.textContent = data.title;  // tetap tampil, tapi kecil
 
  toc.classList.add("hidden");
  page.classList.remove("hidden");
 
  playPage();
  })
- .catch(err=>{
+ .catch(()=>{
  alert("BAB belum tersedia atau file tidak ditemukan");
- console.error(err);
  });
 }
 
-/* ===== PLAY PAGE ===== */
 function playPage(){
  const p = babData.pages[pageIndex];
 
@@ -183,13 +192,11 @@ function playPage(){
  imageEl.src = `https://airnetcso.github.io/hangeul/image/${p.image}.jpg`;
  audioEl.src = `https://airnetcso.github.io/hangeul/audio/${p.audio}.mp3`;
 
- progressEl.textContent =
- `Halaman ${pageIndex+1} / ${babData.pages.length}`;
+ progressEl.textContent = `Halaman ${pageIndex+1} / ${babData.pages.length}`;
 
  audioEl.play();
 }
 
-/* ===== AUTO NEXT ===== */
 audioEl.onended = ()=>{
  pageIndex++;
  if(pageIndex < babData.pages.length){

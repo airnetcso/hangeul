@@ -1,126 +1,185 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EPS-TOPIK Digital 2024</title>
-    <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            background: #fff0f5; 
-            margin: 0; 
-            padding: 20px; 
-            color: #444; 
-        }
-        header { 
-            background: linear-gradient(#ff99cc, #ff66aa); 
-            padding: 30px; 
-            text-align: center; 
-            color: white; 
-            border-radius: 0 0 15px 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        h1 { 
-            font-size: 2em; 
-            margin: 0; 
-            font-weight: normal;
-        }
-        .subtitle {
-            font-size: 1.1em;
-            margin-top: 8px;
-            opacity: 0.9;
-        }
-        .bab-list { 
-            max-width: 600px; 
-            margin: 40px auto; 
-            padding: 0; 
-        }
-        .bab-item { 
-            margin: 10px 0;
-            padding: 14px 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transition: all 0.2s;
-        }
-        .bab-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.12);
-        }
-        .bab-item a { 
-            text-decoration: none; 
-            color: #555; 
-            display: block;
-        }
-        .bab-item a:hover { 
-            color: #ff66aa; 
-        }
-        .bab-number { 
-            font-weight: bold; 
-            color: #ff66aa; 
-            font-size: 1.1em;
-        }
-        .bab-title {
-            margin-left: 10px;
-            font-size: 1em;
-        }
-        footer { 
-            text-align: center; 
-            padding: 40px; 
-            font-size: 0.9em; 
-            color: #aaa; 
-            margin-top: 50px;
-        }
-        @media (max-width: 480px) {
-            h1 { font-size: 1.7em; }
-            .bab-item { padding: 16px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Membaca Hangeul</title>
+
+<style>
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background:#f4f6fb;
+  color:#222;
+}
+
+/* ===== GENERAL ===== */
+.hidden{ display:none; }
+.center{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  text-align:center;
+  height:100vh;
+}
+
+/* ===== COVER ===== */
+#cover{
+  background:linear-gradient(135deg,#4e73df,#6f9cff);
+  color:#fff;
+}
+#cover h1{
+  font-size:28px;
+  margin-bottom:10px;
+}
+#cover p{
+  font-size:16px;
+  opacity:.9;
+}
+#startBtn{
+  margin-top:30px;
+  padding:14px 28px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  background:#fff;
+  color:#4e73df;
+  font-weight:bold;
+}
+
+/* ===== TOC ===== */
+#toc{
+  padding:20px;
+}
+#toc h2{
+  text-align:center;
+  margin-bottom:20px;
+}
+.bab{
+  background:#fff;
+  padding:16px;
+  border-radius:14px;
+  margin-bottom:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,.08);
+  font-size:18px;
+}
+
+/* ===== PAGE ===== */
+#page{
+  padding:20px;
+}
+#page img{
+  width:100%;
+  border-radius:16px;
+  margin-bottom:20px;
+}
+#text{
+  font-size:28px;
+  text-align:center;
+  font-weight:bold;
+}
+#progress{
+  text-align:center;
+  font-size:14px;
+  opacity:.6;
+  margin-top:10px;
+}
+</style>
 </head>
+
 <body>
 
-<header>
-    <h1>EPS-TOPIK Digital 2024</h1>
-    <div class="subtitle">Materi Lengkap Bab 1–30 • Belajar Bahasa Korea untuk Pekerja Migran</div>
-</header>
-
-<div class="bab-list">
-    <div class="bab-item"><a href="bab1.html#Home"><span class="bab-number">BAB 1</span><span class="bab-title">자기소개 (Perkenalan Diri)</span></a></div>
-    <div class="bab-item"><a href="bab2.html#Home"><span class="bab-number">BAB 2</span><span class="bab-title">생활용품 (Barang Kehidupan Sehari-hari)</span></a></div>
-    <div class="bab-item"><a href="bab3.html#Home"><span class="bab-number">BAB 3</span><span class="bab-title">위치와 장소 (Posisi dan Tempat)</span></a></div>
-    <div class="bab-item"><a href="bab4.html#Home"><span class="bab-number">BAB 4</span><span class="bab-title">동작과 사물 (Gerakan dan Benda)</span></a></div>
-    <div class="bab-item"><a href="bab5.html#Home"><span class="bab-number">BAB 5</span><span class="bab-title">날짜와 요일 (Tanggal dan Hari)</span></a></div>
-    <div class="bab-item"><a href="bab6.html#Home"><span class="bab-number">BAB 6</span><span class="bab-title">하루 일과 (Rutinitas Harian)</span></a></div>
-    <div class="bab-item"><a href="bab7.html#Home"><span class="bab-number">BAB 7</span><span class="bab-title">시간 (Waktu)</span></a></div>
-    <div class="bab-item"><a href="bab8.html#Home"><span class="bab-number">BAB 8</span><span class="bab-title">가족 (Keluarga)</span></a></div>
-    <div class="bab-item"><a href="bab9.html#Home"><span class="bab-number">BAB 9</span><span class="bab-title">음식 (Makanan)</span></a></div>
-    <div class="bab-item"><a href="bab10.html#Home"><span class="bab-number">BAB 10</span><span class="bab-title">쇼핑 (Belanja)</span></a></div>
-    <div class="bab-item"><a href="bab11.html#Home"><span class="bab-number">BAB 11</span><span class="bab-title">교통 (Transportasi)</span></a></div>
-    <div class="bab-item"><a href="bab12.html#Home"><span class="bab-number">BAB 12</span><span class="bab-title">전화 (Telepon)</span></a></div>
-    <div class="bab-item"><a href="bab13.html#Home"><span class="bab-number">BAB 13</span><span class="bab-title">우체국 (Kantor Pos)</span></a></div>
-    <div class="bab-item"><a href="bab14.html#Home"><span class="bab-number">BAB 14</span><span class="bab-title">은행 (Bank)</span></a></div>
-    <div class="bab-item"><a href="bab15.html#Home"><span class="bab-number">BAB 15</span><span class="bab-title">병원 (Rumah Sakit)</span></a></div>
-    <div class="bab-item"><a href="bab16.html#Home"><span class="bab-number">BAB 16</span><span class="bab-title">공공기관 (Instansi Pemerintah)</span></a></div>
-    <div class="bab-item"><a href="bab17.html#Home"><span class="bab-number">BAB 17</span><span class="bab-title">직장 생활 (Kehidupan Kerja)</span></a></div>
-    <div class="bab-item"><a href="bab18.html#Home"><span class="bab-number">BAB 18</span><span class="bab-title">공장 근무 (Kerja di Pabrik)</span></a></div>
-    <div class="bab-item"><a href="bab19.html#Home"><span class="bab-number">BAB 19</span><span class="bab-title">건설 현장 (Lokasi Konstruksi)</span></a></div>
-    <div class="bab-item"><a href="bab20.html#Home"><span class="bab-number">BAB 20</span><span class="bab-title">농업 (Pertanian)</span></a></div>
-    <div class="bab-item"><a href="bab21.html#Home"><span class="bab-number">BAB 21</span><span class="bab-title">어업 (Perikanan)</span></a></div>
-    <div class="bab-item"><a href="bab22.html#Home"><span class="bab-number">BAB 22</span><span class="bab-title">생활 안전 (Keselamatan Hidup)</span></a></div>
-    <div class="bab-item"><a href="bab23.html#Home"><span class="bab-number">BAB 23</span><span class="bab-title">한국 이해 (Pemahaman tentang Korea)</span></a></div>
-    <div class="bab-item"><a href="bab24.html#Home"><span class="bab-number">BAB 24</span><span class="bab-title">문화와 예절 (Budaya dan Tata Cara)</span></a></div>
-    <div class="bab-item"><a href="bab25.html#Home"><span class="bab-number">BAB 25</span><span class="bab-title">취미와 여가 (Hobi dan Waktu Luang)</span></a></div>
-    <div class="bab-item"><a href="bab26.html#Home"><span class="bab-number">BAB 26</span><span class="bab-title">여행 (Perjalanan)</span></a></div>
-    <div class="bab-item"><a href="bab27.html#Home"><span class="bab-number">BAB 27</span><span class="bab-title">계절과 날씨 (Musim dan Cuaca)</span></a></div>
-    <div class="bab-item"><a href="bab28.html#Home"><span class="bab-number">BAB 28</span><span class="bab-title">환경 보호 (Perlindungan Lingkungan)</span></a></div>
-    <div class="bab-item"><a href="bab29.html#Home"><span class="bab-number">BAB 29</span><span class="bab-title">사회 생활 (Kehidupan Sosial)</span></a></div>
-    <div class="bab-item"><a href="bab30.html#Home"><span class="bab-number">BAB 30</span><span class="bab-title">미래 계획 (Rencana Masa Depan)</span></a></div>
+<!-- ===== COVER ===== -->
+<div id="cover" class="center">
+  <h1>BELAJAR MEMBACA HANGEUL</h1>
+  <p>Latihan mendengar & membaca bahasa Korea</p>
+  <button id="startBtn">START</button>
 </div>
 
-<footer>
-    EPS-TOPIK Digital 2024 • Materi Pembelajaran Interaktif<br>
-    Dibuat dengan ❤️ untuk pekerja migran Indonesia di Korea
-</footer>
+<!-- ===== TOC ===== -->
+<div id="toc" class="hidden">
+  <h2>DAFTAR ISI</h2>
+  <div class="bab" onclick="openBab(1)">BAB 1 – Salam Dasar</div>
+  <div class="bab" onclick="openBab(2)">BAB 2 – Perkenalan</div>
+  <div class="bab" onclick="openBab(3)">BAB 3 – Ungkapan Sopan</div>
+  <div class="bab" onclick="openBab(4)">BAB 4 – Aktivitas Sehari-hari</div>
+  <div class="bab" onclick="openBab(5)">BAB 5 – Tempat</div>
+  <div class="bab" onclick="openBab(6)">BAB 6 – Waktu</div>
+  <div class="bab" onclick="openBab(7)">BAB 7 – Keluarga</div>
+  <div class="bab" onclick="openBab(8)">BAB 8 – Makanan</div>
+  <div class="bab" onclick="openBab(9)">BAB 9 – Perasaan</div>
+  <div class="bab" onclick="openBab(10)">BAB 10 – Kalimat Panjang</div>
+</div>
+
+<!-- ===== PAGE ===== -->
+<div id="page" class="hidden">
+  <img id="image">
+  <div id="text"></div>
+  <div id="progress"></div>
+</div>
+
+<audio id="audio"></audio>
+
+<script>
+const audioEl = document.getElementById("audio");
+const imageEl = document.getElementById("image");
+const textEl = document.getElementById("text");
+const progressEl = document.getElementById("progress");
+
+const cover = document.getElementById("cover");
+const toc = document.getElementById("toc");
+const page = document.getElementById("page");
+
+/* ===== DATA BAB (CONTOH) ===== */
+const babData = {
+  1:[
+    {t:"안녕하세요", i:"1-1", a:"1-1"},
+    {t:"만나서 반갑습니다", i:"1-2", a:"1-2"},
+    {t:"감사합니다", i:"1-3", a:"1-3"}
+  ],
+  2:[
+    {t:"저는 학생입니다", i:"2-1", a:"2-1"},
+    {t:"이름이 뭐예요?", i:"2-2", a:"2-2"}
+  ]
+};
+
+let currentBab = 0;
+let currentPage = 0;
+
+/* ===== START ===== */
+startBtn.onclick = ()=>{
+  cover.classList.add("hidden");
+  toc.classList.remove("hidden");
+};
+
+/* ===== OPEN BAB ===== */
+function openBab(bab){
+  currentBab = bab;
+  currentPage = 0;
+  toc.classList.add("hidden");
+  page.classList.remove("hidden");
+  playPage(true); // klik user → izin autoplay
+}
+
+/* ===== PLAY PAGE ===== */
+function playPage(fromClick=false){
+  const data = babData[currentBab][currentPage];
+  textEl.textContent = data.t;
+  imageEl.src = `https://airnetcso.github.io/hangeul/image/${data.i}.jpg`;
+  audioEl.src = `https://airnetcso.github.io/hangeul/audio/${data.a}.mp3`;
+  progressEl.textContent = `Halaman ${currentPage+1} / ${babData[currentBab].length}`;
+  audioEl.play();
+}
+
+/* ===== AUTO NEXT ===== */
+audioEl.onended = ()=>{
+  currentPage++;
+  if(currentPage < babData[currentBab].length){
+    playPage();
+  }
+};
+</script>
 
 </body>
 </html>

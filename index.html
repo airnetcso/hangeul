@@ -153,7 +153,8 @@ startBtn.addEventListener("click",()=>{
 
 /* ===== OPEN BAB (PATH FIXED) ===== */
 function openBab(num){
-  const path = `./hangeul/modul/bab${num}.json`;
+  const path = `./modul/bab${num}.json`;
+
   console.log("Loading:", path);
 
   fetch(path)
@@ -202,3 +203,4 @@ audioEl.onended = ()=>{
 
 </body>
 </html>
+

@@ -6,23 +6,19 @@
 <title>Belajar Membaca Hangeul</title>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-
 <style>
 *{ box-sizing:border-box; margin:0; padding:0; }
-
 body{
  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
  background:#faf6f0; /* Krem lembut */
  color:#444;
  min-height:100vh;
 }
-
 .hidden{ display:none !important; }
-
 /* ===== COVER ===== */
 #cover{
  min-height:100vh;
- background: linear-gradient(rgba(78,115,223,0.8), rgba(111,156,255,0.8)), 
+ background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)),
              url('https://raw.githubusercontent.com/airnetcso/hangeul/main/image/bgaa.jpg') center/cover no-repeat;
  color:#fff;
  display:flex;
@@ -53,7 +49,6 @@ body{
  cursor:pointer;
  min-height:56px;
 }
-
 /* ===== TOC - Modern Krem Style ===== */
 #toc{
  padding:32px 20px;
@@ -67,7 +62,6 @@ body{
  font-weight:600;
  opacity:.9;
 }
-
 .bab{
  background:#fffaf0;
  padding:20px 24px;
@@ -75,7 +69,7 @@ body{
  margin-bottom:20px;
  font-size:20px;
  font-weight:600;
- text-align:left; /* Rata kiri */
+ text-align:left;
  box-shadow:0 8px 20px rgba(139,111,71,.08);
  cursor:pointer;
  transition:all .2s ease;
@@ -97,7 +91,6 @@ body{
 .bab:active{
  transform:scale(.98);
 }
-
 /* ===== PAGE ===== */
 #page{
  padding:20px 16px;
@@ -138,16 +131,13 @@ body{
 }
 </style>
 </head>
-
 <body>
-
 <!-- COVER -->
 <div id="cover">
  <h1>BELAJAR MEMBACA HANGEUL</h1>
  <p>Latihan mendengar & membaca bahasa Korea</p>
  <button id="startBtn">START</button>
 </div>
-
 <!-- DAFTAR ISI -->
 <div id="toc" class="hidden">
  <h2>Daftar Isi</h2>
@@ -156,7 +146,6 @@ body{
  <div class="bab" onclick="openBab(3)">BAB 3 – Ungkapan Terima Kasih</div>
  <div class="bab" onclick="openBab(4)">BAB 4 – Perpisahan</div>
 </div>
-
 <!-- HALAMAN BAB -->
 <div id="page" class="hidden">
  <div id="babTitle"></div>
@@ -164,32 +153,25 @@ body{
  <div id="text"></div>
  <div id="progress"></div>
 </div>
-
 <audio id="audio" preload="auto"></audio>
-
 <script>
 const cover = document.getElementById("cover");
 const toc = document.getElementById("toc");
 const page = document.getElementById("page");
 const startBtn = document.getElementById("startBtn");
-
 const babTitleEl = document.getElementById("babTitle");
 const imageEl = document.getElementById("image");
 const textEl = document.getElementById("text");
 const progressEl = document.getElementById("progress");
 const audioEl = document.getElementById("audio");
-
 let babData = null;
 let pageIndex = 0;
-
 startBtn.addEventListener("click",()=>{
  cover.remove();
  toc.classList.remove("hidden");
 });
-
 function openBab(num){
  const path = `./modul/bab${num}.json`;
-
  fetch(path)
  .then(res=>{
  if(!res.ok) throw new Error("404");
@@ -198,31 +180,23 @@ function openBab(num){
  .then(data=>{
  babData = data;
  pageIndex = 0;
-
  babTitleEl.textContent = data.title;
-
  toc.classList.add("hidden");
  page.classList.remove("hidden");
-
  playPage();
  })
  .catch(()=>{
  alert("BAB belum tersedia atau file tidak ditemukan");
  });
 }
-
 function playPage(){
  const p = babData.pages[pageIndex];
-
  textEl.textContent = p.text;
  imageEl.src = p.image;
  audioEl.src = p.audio;
-
  progressEl.textContent = `Halaman ${pageIndex+1} / ${babData.pages.length}`;
-
  audioEl.play();
 }
-
 audioEl.onended = ()=>{
  pageIndex++;
  if(pageIndex < babData.pages.length){
@@ -235,8 +209,5 @@ audioEl.onended = ()=>{
  }
 };
 </script>
-
 </body>
 </html>
-
-

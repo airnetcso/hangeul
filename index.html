@@ -86,12 +86,13 @@ body{
  margin-bottom:12px;
 }
 
+/* === 9:16 AREA === */
 #image,
 #video{
  width:100%;
- aspect-ratio: 9 / 16;   /* 🔥 PORTRAIT */
- max-height:80vh;        /* lebih lega di HP */
- object-fit:cover;       /* isi penuh tanpa gepeng */
+ aspect-ratio: 9 / 16;
+ max-height:80vh;
+ object-fit:cover;
  background:#000;
  margin-bottom:12px;
 }
@@ -144,14 +145,15 @@ const progressEl = document.getElementById("progress");
 
 let babData = null;
 let pageIndex = 0;
+let isEnding = false; // 🔒 FLAG ANTI DOBEL
 
-/* ===== START ===== */
+/* START */
 startBtn.onclick = ()=>{
  cover.remove();
  toc.classList.remove("hidden");
 };
 
-/* ===== OPEN BAB ===== */
+/* OPEN BAB */
 function openBab(num){
  fetch(`./modul/bab${num}.json`)
  .then(r=>r.json())
@@ -163,12 +165,10 @@ function openBab(num){
    page.classList.remove("hidden");
    playPage();
  })
- .catch(()=>{
-   alert("BAB belum tersedia");
- });
+ .catch(()=>alert("BAB belum tersedia"));
 }
 
-/* ===== NEXT PAGE (SATU-SATUNYA JALAN PINDAH) ===== */
+/* SATU-SATUNYA PINDAH PAGE */
 function nextPage(){
  pageIndex++;
 
@@ -182,13 +182,13 @@ function nextPage(){
  }
 }
 
-/* ===== PLAY PAGE ===== */
+/* PLAY PAGE */
 function playPage(){
  const p = babData.pages[pageIndex];
 
- // RESET TOTAL (INI KUNCI BUG)
+ // RESET TOTAL (WAJIB)
+ isEnding = false;
  audioEl.onended = null;
- videoEl.onended = null;
  videoEl.ontimeupdate = null;
 
  audioEl.pause();
@@ -210,11 +210,12 @@ function playPage(){
 
    videoEl.play().catch(()=>{});
 
-   // PENGGANTI audio.onended (STABIL)
+   // ANTI VIDEO MUTER 2x
    videoEl.ontimeupdate = ()=>{
+     if(isEnding) return;
      if(videoEl.duration &&
         videoEl.currentTime >= videoEl.duration - 0.2){
-       videoEl.ontimeupdate = null;
+       isEnding = true;
        nextPage();
      }
    };
@@ -236,4 +237,3 @@ function playPage(){
 
 </body>
 </html>
-

@@ -4,22 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Belajar Membaca Hangeul</title>
+
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+
 <style>
 *{ box-sizing:border-box; margin:0; padding:0; }
+
 body{
  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
- background:#faf6f0; /* Krem lembut */
+ background:#faf6f0;
  color:#444;
  min-height:100vh;
 }
+
 .hidden{ display:none !important; }
+
 /* ===== COVER ===== */
 #cover{
  min-height:100vh;
- background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)),
-             url('https://raw.githubusercontent.com/airnetcso/hangeul/main/image/bgaa.jpg') center/cover no-repeat;
+ background:
+  linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.5)),
+  url('https://raw.githubusercontent.com/airnetcso/hangeul/main/image/bgaa.jpg')
+  center/cover no-repeat;
  color:#fff;
  display:flex;
  flex-direction:column;
@@ -28,16 +35,18 @@ body{
  text-align:center;
  padding:40px 20px;
 }
+
 #cover h1{
  font-size:28px;
  margin-bottom:12px;
- line-height:1.3;
 }
+
 #cover p{
  font-size:16px;
  opacity:.9;
  margin-bottom:30px;
 }
+
 #startBtn{
  padding:16px 40px;
  font-size:18px;
@@ -49,167 +58,155 @@ body{
  cursor:pointer;
  min-height:56px;
 }
-/* ===== TOC - Modern Krem Style ===== */
+
+/* ===== TOC ===== */
 #toc{
  padding:32px 20px;
  background:#faf6f0;
 }
+
 #toc h2{
  font-size:24px;
  text-align:center;
  margin-bottom:32px;
  color:#8b6f47;
- font-weight:600;
- opacity:.9;
 }
+
 .bab{
  background:#fffaf0;
  padding:20px 24px;
- border-radius:0px;
  margin-bottom:20px;
  font-size:20px;
  font-weight:600;
- text-align:left;
- box-shadow:0 8px 20px rgba(139,111,71,.08);
  cursor:pointer;
- transition:all .2s ease;
- display:flex;
- align-items:center;
- position:relative;
- overflow:hidden;
  border-left:5px solid #d4a574;
+ box-shadow:0 8px 20px rgba(0,0,0,.08);
+ transition:.2s;
 }
-.bab::before{
- content:"📚";
- margin-right:16px;
- font-size:24px;
-}
+
 .bab:hover{
- transform:translateY(-4px);
- box-shadow:0 12px 28px rgba(139,111,71,.15);
+ transform:translateY(-3px);
 }
-.bab:active{
- transform:scale(.98);
-}
+
 /* ===== PAGE ===== */
 #page{
  padding:20px 16px;
- background:#faf6f0;
 }
+
 #babTitle{
- font-size:15px;
+ font-size:14px;
  text-align:center;
  opacity:.6;
- margin-bottom:24px;
- font-weight:500;
+ margin-bottom:12px;
 }
-#page img{
+
+#video{
  width:100%;
  aspect-ratio: 2 / 3;
- height: auto;
  max-height:60vh;
- object-fit: cover;
- object-position: center;
- border-radius:0px;
- margin-bottom:24px;
- background:#eee;
+ object-fit:cover;
+ background:#000;
 }
-#text{
- font-size:36px;
- font-weight:700;
- text-align:center;
- line-height:1.4;
- margin-bottom:24px;
- word-break:break-word;
- color:#333;
-}
+
 #progress{
  text-align:center;
  font-size:14px;
  opacity:.6;
- color:#777;
+ margin-top:12px;
 }
 </style>
 </head>
+
 <body>
+
 <!-- COVER -->
 <div id="cover">
  <h1>BELAJAR MEMBACA HANGEUL</h1>
  <p>Latihan mendengar & membaca bahasa Korea</p>
  <button id="startBtn">START</button>
 </div>
-<!-- DAFTAR ISI -->
+
+<!-- TOC -->
 <div id="toc" class="hidden">
  <h2>Daftar Isi</h2>
  <div class="bab" onclick="openBab(1)">BAB 1 – Salam Dasar</div>
  <div class="bab" onclick="openBab(2)">BAB 2 – Perkenalan</div>
- <div class="bab" onclick="openBab(3)">BAB 3 – Ungkapan Terima Kasih</div>
- <div class="bab" onclick="openBab(4)">BAB 4 – Perpisahan</div>
 </div>
-<!-- HALAMAN BAB -->
+
+<!-- PAGE -->
 <div id="page" class="hidden">
  <div id="babTitle"></div>
- <img id="image" src="" alt="Ilustrasi">
- <div id="text"></div>
+ <video id="video" playsinline></video>
  <div id="progress"></div>
 </div>
-<audio id="audio" preload="auto"></audio>
+
 <script>
 const cover = document.getElementById("cover");
 const toc = document.getElementById("toc");
 const page = document.getElementById("page");
 const startBtn = document.getElementById("startBtn");
+
 const babTitleEl = document.getElementById("babTitle");
-const imageEl = document.getElementById("image");
-const textEl = document.getElementById("text");
+const videoEl = document.getElementById("video");
 const progressEl = document.getElementById("progress");
-const audioEl = document.getElementById("audio");
+
 let babData = null;
 let pageIndex = 0;
-startBtn.addEventListener("click",()=>{
+
+/* START */
+startBtn.onclick = ()=>{
  cover.remove();
  toc.classList.remove("hidden");
-});
+};
+
+/* OPEN BAB */
 function openBab(num){
- const path = `./modul/bab${num}.json`;
- fetch(path)
+ fetch(`./modul/bab${num}.json`)
  .then(res=>{
- if(!res.ok) throw new Error("404");
- return res.json();
+   if(!res.ok) throw new Error("404");
+   return res.json();
  })
  .then(data=>{
- babData = data;
- pageIndex = 0;
- babTitleEl.textContent = data.title;
- toc.classList.add("hidden");
- page.classList.remove("hidden");
- playPage();
+   babData = data;
+   pageIndex = 0;
+   babTitleEl.textContent = data.title;
+   toc.classList.add("hidden");
+   page.classList.remove("hidden");
+   playPage();
  })
  .catch(()=>{
- alert("BAB belum tersedia atau file tidak ditemukan");
+   alert("BAB belum tersedia atau file tidak ditemukan");
  });
 }
+
+/* PLAY PAGE */
 function playPage(){
  const p = babData.pages[pageIndex];
- textEl.textContent = p.text;
- imageEl.src = p.image;
- audioEl.src = p.audio;
- progressEl.textContent = `Halaman ${pageIndex+1} / ${babData.pages.length}`;
- audioEl.play();
+
+ videoEl.pause();
+ videoEl.src = p.video;
+ videoEl.currentTime = 0;
+ videoEl.controls = false;
+ videoEl.muted = false;
+
+ videoEl.play().catch(()=>{});
+
+ progressEl.textContent =
+   `Halaman ${pageIndex+1} / ${babData.pages.length}`;
 }
-audioEl.onended = ()=>{
+
+/* AUTO NEXT */
+videoEl.onended = ()=>{
  pageIndex++;
  if(pageIndex < babData.pages.length){
- playPage();
+   playPage();
  } else {
- alert("Bab selesai!");
- page.classList.add("hidden");
- toc.classList.remove("hidden");
- pageIndex = 0;
+   alert("Bab selesai!");
+   page.classList.add("hidden");
+   toc.classList.remove("hidden");
  }
 };
 </script>
+
 </body>
 </html>
-
-

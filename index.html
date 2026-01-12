@@ -36,16 +36,8 @@ body{
  padding:40px 20px;
 }
 
-#cover h1{
- font-size:28px;
- margin-bottom:12px;
-}
-
-#cover p{
- font-size:16px;
- opacity:.9;
- margin-bottom:30px;
-}
+#cover h1{ font-size:28px; margin-bottom:12px; }
+#cover p{ font-size:16px; opacity:.9; margin-bottom:30px; }
 
 #startBtn{
  padding:16px 40px;
@@ -62,7 +54,6 @@ body{
 /* ===== TOC ===== */
 #toc{
  padding:32px 20px;
- background:#faf6f0;
 }
 
 #toc h2{
@@ -81,11 +72,6 @@ body{
  cursor:pointer;
  border-left:5px solid #d4a574;
  box-shadow:0 8px 20px rgba(0,0,0,.08);
- transition:.2s;
-}
-
-.bab:hover{
- transform:translateY(-3px);
 }
 
 /* ===== PAGE ===== */
@@ -100,19 +86,20 @@ body{
  margin-bottom:12px;
 }
 
+#image,
 #video{
  width:100%;
  aspect-ratio: 2 / 3;
  max-height:60vh;
  object-fit:cover;
  background:#000;
+ margin-bottom:12px;
 }
 
 #progress{
  text-align:center;
  font-size:14px;
  opacity:.6;
- margin-top:12px;
 }
 </style>
 </head>
@@ -129,16 +116,19 @@ body{
 <!-- TOC -->
 <div id="toc" class="hidden">
  <h2>Daftar Isi</h2>
- <div class="bab" onclick="openBab(1)">BAB 1 – Salam Dasar</div>
- <div class="bab" onclick="openBab(2)">BAB 2 – Perkenalan</div>
+ <div class="bab" onclick="openBab(1)">BAB 1</div>
+ <div class="bab" onclick="openBab(2)">BAB 2</div>
 </div>
 
 <!-- PAGE -->
 <div id="page" class="hidden">
  <div id="babTitle"></div>
- <video id="video" playsinline></video>
+ <img id="image" class="hidden">
+ <video id="video" class="hidden" playsinline></video>
  <div id="progress"></div>
 </div>
+
+<audio id="audio"></audio>
 
 <script>
 const cover = document.getElementById("cover");
@@ -147,25 +137,24 @@ const page = document.getElementById("page");
 const startBtn = document.getElementById("startBtn");
 
 const babTitleEl = document.getElementById("babTitle");
+const imageEl = document.getElementById("image");
 const videoEl = document.getElementById("video");
+const audioEl = document.getElementById("audio");
 const progressEl = document.getElementById("progress");
 
 let babData = null;
 let pageIndex = 0;
 
-/* START */
+/* ===== START ===== */
 startBtn.onclick = ()=>{
  cover.remove();
  toc.classList.remove("hidden");
 };
 
-/* OPEN BAB */
+/* ===== OPEN BAB ===== */
 function openBab(num){
  fetch(`./modul/bab${num}.json`)
- .then(res=>{
-   if(!res.ok) throw new Error("404");
-   return res.json();
- })
+ .then(r=>r.json())
  .then(data=>{
    babData = data;
    pageIndex = 0;
@@ -175,37 +164,74 @@ function openBab(num){
    playPage();
  })
  .catch(()=>{
-   alert("BAB belum tersedia atau file tidak ditemukan");
+   alert("BAB belum tersedia");
  });
 }
 
-/* PLAY PAGE */
-function playPage(){
- const p = babData.pages[pageIndex];
-
- videoEl.pause();
- videoEl.src = p.video;
- videoEl.currentTime = 0;
- videoEl.controls = false;
- videoEl.muted = false;
-
- videoEl.play().catch(()=>{});
-
- progressEl.textContent =
-   `Halaman ${pageIndex+1} / ${babData.pages.length}`;
-}
-
-/* AUTO NEXT */
-videoEl.onended = ()=>{
+/* ===== NEXT PAGE (SATU-SATUNYA JALAN PINDAH) ===== */
+function nextPage(){
  pageIndex++;
+
  if(pageIndex < babData.pages.length){
    playPage();
  } else {
    alert("Bab selesai!");
    page.classList.add("hidden");
    toc.classList.remove("hidden");
+   pageIndex = 0;
  }
-};
+}
+
+/* ===== PLAY PAGE ===== */
+function playPage(){
+ const p = babData.pages[pageIndex];
+
+ // RESET TOTAL (INI KUNCI BUG)
+ audioEl.onended = null;
+ videoEl.onended = null;
+ videoEl.ontimeupdate = null;
+
+ audioEl.pause();
+ videoEl.pause();
+
+ imageEl.classList.add("hidden");
+ videoEl.classList.add("hidden");
+
+ progressEl.textContent =
+   `Halaman ${pageIndex+1} / ${babData.pages.length}`;
+
+ /* ==== VIDEO PAGE ==== */
+ if(p.video){
+   videoEl.classList.remove("hidden");
+   videoEl.src = p.video;
+   videoEl.currentTime = 0;
+   videoEl.muted = false;
+   videoEl.controls = false;
+
+   videoEl.play().catch(()=>{});
+
+   // PENGGANTI audio.onended (STABIL)
+   videoEl.ontimeupdate = ()=>{
+     if(videoEl.duration &&
+        videoEl.currentTime >= videoEl.duration - 0.2){
+       videoEl.ontimeupdate = null;
+       nextPage();
+     }
+   };
+   return;
+ }
+
+ /* ==== IMAGE + AUDIO PAGE ==== */
+ imageEl.classList.remove("hidden");
+ imageEl.src = p.image;
+
+ audioEl.src = p.audio;
+ audioEl.play();
+
+ audioEl.onended = ()=>{
+   nextPage();
+ };
+}
 </script>
 
 </body>

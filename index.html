@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Belajar Membaca Hangeul</title>
+<title>Bahasa Korea Untuk Pemula</title>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
@@ -16,13 +16,10 @@ body{
 }
 .hidden{ display:none !important; }
 
-/* ===== COVER ===== */
+/* COVER sama seperti sebelumnya */
 #cover{
   min-height:100vh;
-  background:
-    linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.5)),
-    url('https://raw.githubusercontent.com/airnetcso/hangeul/main/image/bgaa.jpg')
-    center/cover no-repeat;
+  background: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.5)), url('https://raw.githubusercontent.com/airnetcso/hangeul/main/image/bgaa.jpg') center/cover no-repeat;
   color:#fff;
   display:flex;
   flex-direction:column;
@@ -46,7 +43,7 @@ body{
   box-shadow:0 4px 12px rgba(0,0,0,0.15);
 }
 
-/* ===== TOC ===== */
+/* TOC sama */
 #toc{
   padding:32px 20px;
 }
@@ -70,7 +67,7 @@ body{
 }
 .bab:active{ transform: scale(0.98); }
 
-/* ===== PAGE ===== */
+/* PAGE */
 #page{
   padding:20px 16px;
   display:flex;
@@ -84,26 +81,29 @@ body{
   margin-bottom:12px;
 }
 
-/* === MEDIA AREA (fleksibel sesuai rasio asli) === */
+/* MEDIA FULL BLEED */
 .media-container {
   width: 100%;
-  max-height: 80vh;
+  height: 75vh;                  /* <-- atur ini sesuai kebutuhan, 70-80vh biasanya pas */
   margin: 0 auto 16px;
   background: #000;
   border-radius: 12px;
   overflow: hidden;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
 }
+
 #image,
 #video {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;   /* <-- kunci: gambar utuh, ga kepotong */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   display: block;
 }
+
 #progress{
   text-align:center;
   font-size:14px;
@@ -135,7 +135,7 @@ body{
   <div class="bab" onclick="openBab(9)">BAB 9</div>
   <div class="bab" onclick="openBab(10)">BAB 10</div>
   <div class="bab" onclick="openBab(11)">BAB 11</div>
-  <div class="bab" onclick="openBab(12)">BAB 12</div> <!-- aku betulin nomor bab terakhir -->
+  <div class="bab" onclick="openBab(12)">BAB 12</div>
 </div>
 
 <!-- PAGE -->
@@ -151,6 +151,7 @@ body{
 <audio id="audio"></audio>
 
 <script>
+// Script sama seperti versi sebelumnya, ga perlu diubah
 const cover = document.getElementById("cover");
 const toc = document.getElementById("toc");
 const page = document.getElementById("page");
@@ -163,15 +164,13 @@ const progressEl = document.getElementById("progress");
 
 let babData = null;
 let pageIndex = 0;
-let isEnding = false; // anti double trigger
+let isEnding = false;
 
-/* START */
 startBtn.onclick = () => {
   cover.remove();
   toc.classList.remove("hidden");
 };
 
-/* OPEN BAB */
 function openBab(num) {
   fetch(`./module/bab${num}.json`)
     .then(r => r.json())
@@ -186,7 +185,6 @@ function openBab(num) {
     .catch(() => alert("BAB belum tersedia atau file JSON error"));
 }
 
-/* NEXT PAGE */
 function nextPage() {
   pageIndex++;
   if (pageIndex < babData.pages.length) {
@@ -199,7 +197,6 @@ function nextPage() {
   }
 }
 
-/* PLAY PAGE */
 function playPage() {
   const p = babData.pages[pageIndex];
   isEnding = false;
@@ -212,26 +209,24 @@ function playPage() {
 
   progressEl.textContent = `Halaman ${pageIndex + 1} / ${babData.pages.length}`;
 
-  /* ==== VIDEO PAGE ==== */
   if (p.video) {
     videoEl.classList.remove("hidden");
     videoEl.src = p.video;
     videoEl.currentTime = 0;
     videoEl.muted = false;
-    videoEl.controls = false; // atau true kalau mau kontrol manual
+    videoEl.controls = false;
     videoEl.play().catch(() => {});
 
     videoEl.ontimeupdate = () => {
       if (isEnding) return;
       if (videoEl.duration && videoEl.currentTime >= videoEl.duration - 0.3) {
         isEnding = true;
-        setTimeout(nextPage, 300); // sedikit delay biar ga buru-buru
+        setTimeout(nextPage, 300);
       }
     };
     return;
   }
 
-  /* ==== IMAGE + AUDIO PAGE ==== */
   imageEl.classList.remove("hidden");
   imageEl.src = p.image;
   audioEl.src = p.audio;

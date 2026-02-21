@@ -4,139 +4,148 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Belajar Membaca Hangeul</title>
-
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-
 <style>
 *{ box-sizing:border-box; margin:0; padding:0; }
-
 body{
- font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
- background:#faf6f0;
- color:#444;
- min-height:100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background:#faf6f0;
+  color:#444;
+  min-height:100vh;
 }
-
 .hidden{ display:none !important; }
 
 /* ===== COVER ===== */
 #cover{
- min-height:100vh;
- background:
-  linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.5)),
-  url('https://raw.githubusercontent.com/airnetcso/hangeul/main/image/bgaa.jpg')
-  center/cover no-repeat;
- color:#fff;
- display:flex;
- flex-direction:column;
- justify-content:center;
- align-items:center;
- text-align:center;
- padding:40px 20px;
+  min-height:100vh;
+  background:
+    linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.5)),
+    url('https://raw.githubusercontent.com/airnetcso/hangeul/main/image/bgaa.jpg')
+    center/cover no-repeat;
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:40px 20px;
 }
-
-#cover h1{ font-size:28px; margin-bottom:12px; }
-#cover p{ font-size:16px; opacity:.9; margin-bottom:30px; }
-
+#cover h1{ font-size: clamp(24px, 6vw, 32px); margin-bottom:12px; }
+#cover p{ font-size: clamp(14px, 4vw, 18px); opacity:.9; margin-bottom:30px; }
 #startBtn{
- padding:16px 40px;
- font-size:18px;
- border:none;
- border-radius:30px;
- background:#fff;
- color:#4e73df;
- font-weight:700;
- cursor:pointer;
- min-height:56px;
+  padding:16px 40px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  background:#fff;
+  color:#4e73df;
+  font-weight:700;
+  cursor:pointer;
+  min-height:56px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
 }
 
 /* ===== TOC ===== */
 #toc{
- padding:32px 20px;
+  padding:32px 20px;
 }
-
 #toc h2{
- font-size:24px;
- text-align:center;
- margin-bottom:32px;
- color:#8b6f47;
+  font-size:24px;
+  text-align:center;
+  margin-bottom:32px;
+  color:#8b6f47;
 }
-
 .bab{
- background:#fffaf0;
- padding:20px 24px;
- margin-bottom:20px;
- font-size:20px;
- font-weight:600;
- cursor:pointer;
- border-left:5px solid #d4a574;
- box-shadow:0 8px 20px rgba(0,0,0,.08);
+  background:#fffaf0;
+  padding:20px 24px;
+  margin-bottom:20px;
+  font-size:20px;
+  font-weight:600;
+  cursor:pointer;
+  border-left:5px solid #d4a574;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  border-radius:8px;
+  transition: transform 0.1s;
 }
+.bab:active{ transform: scale(0.98); }
 
 /* ===== PAGE ===== */
 #page{
- padding:20px 16px;
+  padding:20px 16px;
+  display:flex;
+  flex-direction:column;
+  height:100vh;
 }
-
 #babTitle{
- font-size:14px;
- text-align:center;
- opacity:.6;
- margin-bottom:12px;
+  font-size:14px;
+  text-align:center;
+  opacity:.6;
+  margin-bottom:12px;
 }
 
-/* === 9:16 AREA === */
+/* === MEDIA AREA (fleksibel sesuai rasio asli) === */
+.media-container {
+  width: 100%;
+  max-height: 80vh;
+  margin: 0 auto 16px;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 #image,
-#video{
- width:100%;
- aspect-ratio: 9 / 16;
- max-height:80vh;
- object-fit:cover;
- background:#000;
- margin-bottom:12px;
+#video {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;   /* <-- kunci: gambar utuh, ga kepotong */
+  display: block;
 }
-
 #progress{
- text-align:center;
- font-size:14px;
- opacity:.6;
+  text-align:center;
+  font-size:14px;
+  opacity:.6;
+  margin-top:8px;
 }
 </style>
 </head>
-
 <body>
 
 <!-- COVER -->
 <div id="cover">
- <h1>BELAJAR MEMBACA HANGEUL</h1>
- <p>Latihan mendengar & membaca bahasa Korea</p>
- <button id="startBtn">START</button>
+  <h1>BELAJAR MEMBACA HANGEUL</h1>
+  <p>Latihan mendengar & membaca bahasa Korea</p>
+  <button id="startBtn">START</button>
 </div>
 
 <!-- TOC -->
 <div id="toc" class="hidden">
- <h2>Daftar Isi</h2>
- <div class="bab" onclick="openBab(1)">BAB 1</div>
- <div class="bab" onclick="openBab(2)">BAB 2</div>
- <div class="bab" onclick="openBab(3)">BAB 3</div>
- <div class="bab" onclick="openBab(4)">BAB 4</div>
- <div class="bab" onclick="openBab(1)">BAB 5</div>
- <div class="bab" onclick="openBab(2)">BAB 6</div>
- <div class="bab" onclick="openBab(3)">BAB 7</div>
- <div class="bab" onclick="openBab(4)">BAB 8</div>
- <div class="bab" onclick="openBab(1)">BAB 9</div>
- <div class="bab" onclick="openBab(2)">BAB 10</div>
- <div class="bab" onclick="openBab(3)">BAB 11</div>
- <div class="bab" onclick="openBab(4)">BAB 11</div>
+  <h2>Daftar Isi</h2>
+  <div class="bab" onclick="openBab(1)">BAB 1</div>
+  <div class="bab" onclick="openBab(2)">BAB 2</div>
+  <div class="bab" onclick="openBab(3)">BAB 3</div>
+  <div class="bab" onclick="openBab(4)">BAB 4</div>
+  <div class="bab" onclick="openBab(5)">BAB 5</div>
+  <div class="bab" onclick="openBab(6)">BAB 6</div>
+  <div class="bab" onclick="openBab(7)">BAB 7</div>
+  <div class="bab" onclick="openBab(8)">BAB 8</div>
+  <div class="bab" onclick="openBab(9)">BAB 9</div>
+  <div class="bab" onclick="openBab(10)">BAB 10</div>
+  <div class="bab" onclick="openBab(11)">BAB 11</div>
+  <div class="bab" onclick="openBab(12)">BAB 12</div> <!-- aku betulin nomor bab terakhir -->
 </div>
 
 <!-- PAGE -->
 <div id="page" class="hidden">
- <div id="babTitle"></div>
- <img id="image" class="hidden">
- <video id="video" class="hidden" playsinline></video>
- <div id="progress"></div>
+  <div id="babTitle"></div>
+  <div class="media-container">
+    <img id="image" class="hidden" alt="Materi Hangeul">
+    <video id="video" class="hidden" playsinline muted controls></video>
+  </div>
+  <div id="progress"></div>
 </div>
 
 <audio id="audio"></audio>
@@ -146,7 +155,6 @@ const cover = document.getElementById("cover");
 const toc = document.getElementById("toc");
 const page = document.getElementById("page");
 const startBtn = document.getElementById("startBtn");
-
 const babTitleEl = document.getElementById("babTitle");
 const imageEl = document.getElementById("image");
 const videoEl = document.getElementById("video");
@@ -155,99 +163,88 @@ const progressEl = document.getElementById("progress");
 
 let babData = null;
 let pageIndex = 0;
-let isEnding = false; // 🔒 FLAG ANTI DOBEL
+let isEnding = false; // anti double trigger
 
 /* START */
-startBtn.onclick = ()=>{
- cover.remove();
- toc.classList.remove("hidden");
+startBtn.onclick = () => {
+  cover.remove();
+  toc.classList.remove("hidden");
 };
 
 /* OPEN BAB */
-function openBab(num){
- fetch(`./module/bab${num}.json`)
- .then(r=>r.json())
- .then(data=>{
-   babData = data;
-   pageIndex = 0;
-   babTitleEl.textContent = data.title;
-   toc.classList.add("hidden");
-   page.classList.remove("hidden");
-   playPage();
- })
- .catch(()=>alert("BAB belum tersedia"));
+function openBab(num) {
+  fetch(`./module/bab${num}.json`)
+    .then(r => r.json())
+    .then(data => {
+      babData = data;
+      pageIndex = 0;
+      babTitleEl.textContent = data.title || `BAB ${num}`;
+      toc.classList.add("hidden");
+      page.classList.remove("hidden");
+      playPage();
+    })
+    .catch(() => alert("BAB belum tersedia atau file JSON error"));
 }
 
-/* SATU-SATUNYA PINDAH PAGE */
-function nextPage(){
- pageIndex++;
-
- if(pageIndex < babData.pages.length){
-   playPage();
- } else {
-   alert("Bab selesai!");
-   page.classList.add("hidden");
-   toc.classList.remove("hidden");
-   pageIndex = 0;
- }
+/* NEXT PAGE */
+function nextPage() {
+  pageIndex++;
+  if (pageIndex < babData.pages.length) {
+    playPage();
+  } else {
+    alert("Bab selesai! Keren ya progress kamu 🔥");
+    page.classList.add("hidden");
+    toc.classList.remove("hidden");
+    pageIndex = 0;
+  }
 }
 
 /* PLAY PAGE */
-function playPage(){
- const p = babData.pages[pageIndex];
+function playPage() {
+  const p = babData.pages[pageIndex];
+  isEnding = false;
+  audioEl.onended = null;
+  videoEl.ontimeupdate = null;
+  audioEl.pause();
+  videoEl.pause();
+  imageEl.classList.add("hidden");
+  videoEl.classList.add("hidden");
 
- // RESET TOTAL (WAJIB)
- isEnding = false;
- audioEl.onended = null;
- videoEl.ontimeupdate = null;
+  progressEl.textContent = `Halaman ${pageIndex + 1} / ${babData.pages.length}`;
 
- audioEl.pause();
- videoEl.pause();
+  /* ==== VIDEO PAGE ==== */
+  if (p.video) {
+    videoEl.classList.remove("hidden");
+    videoEl.src = p.video;
+    videoEl.currentTime = 0;
+    videoEl.muted = false;
+    videoEl.controls = false; // atau true kalau mau kontrol manual
+    videoEl.play().catch(() => {});
 
- imageEl.classList.add("hidden");
- videoEl.classList.add("hidden");
+    videoEl.ontimeupdate = () => {
+      if (isEnding) return;
+      if (videoEl.duration && videoEl.currentTime >= videoEl.duration - 0.3) {
+        isEnding = true;
+        setTimeout(nextPage, 300); // sedikit delay biar ga buru-buru
+      }
+    };
+    return;
+  }
 
- progressEl.textContent =
-   `Halaman ${pageIndex+1} / ${babData.pages.length}`;
+  /* ==== IMAGE + AUDIO PAGE ==== */
+  imageEl.classList.remove("hidden");
+  imageEl.src = p.image;
+  audioEl.src = p.audio;
+  audioEl.currentTime = 0;
+  audioEl.play().catch(() => {});
 
- /* ==== VIDEO PAGE ==== */
- if(p.video){
-   videoEl.classList.remove("hidden");
-   videoEl.src = p.video;
-   videoEl.currentTime = 0;
-   videoEl.muted = false;
-   videoEl.controls = false;
-
-   videoEl.play().catch(()=>{});
-
-   // ANTI VIDEO MUTER 2x
-   videoEl.ontimeupdate = ()=>{
-     if(isEnding) return;
-     if(videoEl.duration &&
-        videoEl.currentTime >= videoEl.duration - 0.2){
-       isEnding = true;
-       nextPage();
-     }
-   };
-   return;
- }
-
- /* ==== IMAGE + AUDIO PAGE ==== */
- imageEl.classList.remove("hidden");
- imageEl.src = p.image;
-
- audioEl.src = p.audio;
- audioEl.play();
-
- audioEl.onended = ()=>{
-   nextPage();
- };
+  audioEl.onended = () => {
+    if (!isEnding) {
+      isEnding = true;
+      nextPage();
+    }
+  };
 }
 </script>
-
 </body>
 </html>
-
-
-
-

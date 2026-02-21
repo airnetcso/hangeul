@@ -81,16 +81,19 @@ body{
   margin-bottom:8px;
 }
 
-/* MEDIA - lebih besar, scale up full */
+/* MEDIA - besar + tap-friendly */
 .media-container {
   width: 100%;
-  height: 80vh;  /* <-- ini bikin gambar lebih gede, ubah ke 85vh kalau mau lebih */
+  height: 80vh;
   margin: 0 auto 12px;
   background: #000;
   border-radius: 12px;
   overflow: hidden;
   position: relative;
   flex: 1;
+  touch-action: manipulation;           /* cegah double-tap zoom */
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #image,
@@ -150,7 +153,6 @@ body{
 <audio id="audio"></audio>
 
 <script>
-// Script tetap sama seperti sebelumnya
 const cover = document.getElementById("cover");
 const toc = document.getElementById("toc");
 const page = document.getElementById("page");
@@ -160,6 +162,7 @@ const imageEl = document.getElementById("image");
 const videoEl = document.getElementById("video");
 const audioEl = document.getElementById("audio");
 const progressEl = document.getElementById("progress");
+const mediaContainer = document.querySelector(".media-container");
 
 let babData = null;
 let pageIndex = 0;
@@ -213,7 +216,7 @@ function playPage() {
     videoEl.src = p.video;
     videoEl.currentTime = 0;
     videoEl.muted = false;
-    videoEl.controls = false;
+    videoEl.controls = false; // biar tap full area kerja
     videoEl.play().catch(() => {});
 
     videoEl.ontimeupdate = () => {
@@ -239,6 +242,26 @@ function playPage() {
     }
   };
 }
+
+// FITUR BARU: TAP LAYAR UNTUK PAUSE/PLAY
+mediaContainer.addEventListener('click', (e) => {
+  // Skip kalau tap di controls video (kalau nyala)
+  if (videoEl.controls && e.target === videoEl) return;
+
+  if (!videoEl.classList.contains('hidden') && videoEl.src) {
+    if (videoEl.paused) {
+      videoEl.play().catch(() => {});
+    } else {
+      videoEl.pause();
+    }
+  } else if (!imageEl.classList.contains('hidden') && audioEl.src) {
+    if (audioEl.paused) {
+      audioEl.play().catch(() => {});
+    } else {
+      audioEl.pause();
+    }
+  }
+});
 </script>
 </body>
 </html>
